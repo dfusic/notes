@@ -1,22 +1,36 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+
+import Modal from '../Modal';
 
 const createMarkdownDisplay = content => ({
   __html: content
 });
 
 const SingleNote = props => {
-  const { content = '', id, onClick } = props;
+  const { content = '', id } = props;
+
+  const [showModal, setShowModal] = useState(false);
+
+  const openModal = () => setShowModal(true);
+  const closeModal = () => setShowModal(false);
 
   return (
-    <StyledSingleNote onClick={onClick} id={id} className="single-note">
-      <div dangerouslySetInnerHTML={createMarkdownDisplay(content)} />
-    </StyledSingleNote>
+    <>
+      {showModal && (
+        <Modal onClose={closeModal}>
+          <h1>Modal</h1>
+        </Modal>
+      )}
+      <StyledSingleNote onClick={openModal} id={id} className="single-note">
+        <div dangerouslySetInnerHTML={createMarkdownDisplay(content)} />
+      </StyledSingleNote>
+    </>
   );
 };
 
-const StyledSingleNote = styled.div`
+const StyledSingleNote = styled.li`
   width: 200px;
   height: 200px;
   background-color: #fdfdfd;
@@ -36,8 +50,7 @@ const StyledSingleNote = styled.div`
 `;
 
 SingleNote.propTypes = {
-  id: PropTypes.string.isRequired,
-  onClick: PropTypes.func.isRequired
+  id: PropTypes.string.isRequired
 };
 
 export default SingleNote;

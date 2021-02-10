@@ -10,12 +10,7 @@ const NotesList = () => {
   const allNotes = notes.getNotes();
 
   const notesNodes = allNotes.map(note => (
-    <SingleNote
-      onClick={() => console.log('click')}
-      content={note.content}
-      id={note.id}
-      key={note.id}
-    />
+    <SingleNote content={note.content} id={note.id} key={note.id} />
   ));
 
   return (
