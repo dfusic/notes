@@ -1,44 +1,43 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 
 import Overlay from '../Overlay';
 
-const Modal = ({ children, onClose }) => {
-  // componentDidMount
-  // listen for escape key
-  useEffect(() => {
-    document.addEventListener('keydown', e => {
-      console.log(e.keyCode);
-      if (e.keyCode === 27) {
-        onClose();
-      }
-    });
-  }, []);
+const Modal = ({ children }) => (
+  <Overlay centerChildren>
+    <StyledModal>{children}</StyledModal>
+  </Overlay>
+);
 
-  // componentWillUnmount
-  // remove listener for escape key
+const Header = ({ children }) => (
+  <StyledModalHeader>{children}</StyledModalHeader>
+);
 
-  useEffect(() => {
-    return document.removeEventListener('keydown');
-  }, []);
-
-  return (
-    <Overlay centerChildren>
-      <StyledModal>
-        <button onClick={onClose} type="button">
-          Close
-        </button>
-        {children}
-      </StyledModal>
-    </Overlay>
-  );
-};
+const Content = ({ children }) => (
+  <StyledModalContent>{children}</StyledModalContent>
+);
 
 const StyledModal = styled.div`
   width: 800px;
   height: 900px;
   display: block;
   background-color: #ffffff;
+  box-sizing: border-box;
+  padding: 50px;
 `;
+
+const StyledModalHeader = styled.div`
+  display: block;
+  width: 100%;
+  height: 80px;
+`;
+
+const StyledModalContent = styled.div`
+  display: block
+  width: 100%;
+`;
+
+Modal.Header = Header;
+Modal.Content = Content;
 
 export default Modal;
