@@ -1,5 +1,7 @@
 // useNotes hook, used for accessing notes state
 
+const { localStorage } = window;
+
 const notes = [
   {
     id: 'note1',
@@ -61,28 +63,20 @@ const notes = [
   }
 ];
 
-// append new note to the note array
-const setNote = () => {
-  console.log('set note');
+// set notes in localStorage
+const setNotes = data => localStorage.setItem('notes', data);
+
+// get one note via id
+const getNoteById = id => {
+  const localStorageNotes = JSON.parse(localStorage.getItem('notes'));
+
+  return localStorageNotes.find(note => note.id === id);
 };
 
-// get one note via ID
-const getNotes = () => notes;
-
-// remove one note via id
-const removeNote = () => {
-  console.log('remove note');
+// remove note by id
+const deleteNoteById = id => {
+  const localStorageNotes = JSON.parse(localStorage.getItem('notes'));
+  return localStorageNotes.filter(note => note.id !== id);
 };
 
-// update one note via id
-const updateNote = () => {
-  console.log('update note with id');
-};
-
-// batch remove notes form array
-// takes in array of IDs -> ["id1", "id2", "id3"]
-const removeNotes = () => {
-  console.log('remove multiple notes');
-};
-
-export default { setNote, getNotes, removeNote, removeNotes, updateNote };
+export default { setNotes, getNoteById, deleteNoteById };

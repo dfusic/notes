@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import ReactMarkdown from 'react-markdown';
+import MarkdownPreview from '../MarkdownPreview';
 
 import Modal from '../Modal';
 import Flexbox from '../Flexbox';
@@ -57,7 +57,7 @@ const SingleNote = props => {
               value={textareaValue}
               onChange={e => onTextareaChange(e)}
             />
-            <ReactMarkdown>{textareaValue}</ReactMarkdown>
+            <MarkdownPreview markdown={textareaValue} />
           </Modal.Content>
         </Modal>
       )}
