@@ -4,22 +4,20 @@ import styled from 'styled-components';
 import SingleNote from '../SingleNote';
 import NewNoteButton from '../NewNoteButton';
 
-import notes from '../../hooks/useNotes';
+import NotesContext from '../../context/NotesContext';
 
-const NotesList = () => {
-  const allNotes = notes.getNotes();
-
-  const notesNodes = allNotes.map(note => (
-    <SingleNote content={note.content} id={note.id} key={note.id} />
-  ));
-
-  return (
-    <StyledNotesList>
-      <NewNoteButton onClick={() => console.log('add new note')} />
-      {notesNodes}
-    </StyledNotesList>
-  );
-};
+const NotesList = () => (
+  <StyledNotesList>
+    <NewNoteButton onClick={() => console.log('add new note')} />
+    <NotesContext.Consumer>
+      {({ notes }) =>
+        notes.map(note => (
+          <SingleNote content={note.content} id={note.id} key={note.id} />
+        ))
+      }
+    </NotesContext.Consumer>
+  </StyledNotesList>
+);
 
 const StyledNotesList = styled.ul`
   list-style: none;
