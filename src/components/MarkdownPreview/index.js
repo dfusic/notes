@@ -11,7 +11,6 @@ const StyledMarkdownPreview = styled(ReactMarkdown)`
   display: block;
   width: 100%;
   height: 500px;
-  border: 1px solid red;
 `;
 
 export default MarkdownPreview;

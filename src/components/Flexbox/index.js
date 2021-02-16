@@ -25,8 +25,18 @@ const StyledFlexbox = styled.div`
 
 Flexbox.propTypes = {
   flexDirection: PropTypes.oneOf(['row', 'column']),
-  justifyContent: PropTypes.oneOf(['flex-start', 'center', 'flex-end']),
-  alignItems: PropTypes.oneOf(['flex-start', 'center', 'flex-end'])
+  justifyContent: PropTypes.oneOf([
+    'flex-start',
+    'center',
+    'flex-end',
+    'space-between'
+  ]),
+  alignItems: PropTypes.oneOf([
+    'flex-start',
+    'center',
+    'flex-end',
+    'space-between'
+  ])
 };
 
 Flexbox.defaultProps = {
