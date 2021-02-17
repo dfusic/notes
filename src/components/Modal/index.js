@@ -33,8 +33,10 @@ const StyledModalHeader = styled.div`
 `;
 
 const StyledModalContent = styled.div`
-  display: block
+  display: block;
   width: 100%;
+  height: 710px;
+  overflow-y: auto;
 `;
 
 Modal.Header = Header;

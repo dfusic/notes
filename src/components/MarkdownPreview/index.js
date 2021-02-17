@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 import ReactMarkdown from 'react-markdown';
 
 const MarkdownPreview = ({ markdown }) => (
@@ -9,8 +10,14 @@ const MarkdownPreview = ({ markdown }) => (
 const StyledMarkdownPreview = styled(ReactMarkdown)`
   font-family: 'Merriweather', serif;
   display: block;
-  width: 100%;
-  height: 500px;
 `;
+
+MarkdownPreview.propTypes = {
+  markdown: PropTypes.string
+};
+
+MarkdownPreview.defaultProps = {
+  markdown: ''
+};
 
 export default MarkdownPreview;

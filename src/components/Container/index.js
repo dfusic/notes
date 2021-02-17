@@ -8,8 +8,14 @@ const Container = ({ children }) => (
 export default Container;
 
 const StyledContainer = styled.div`
-  width: calc(100% - 200px);
+  width: calc(100% - 150px);
   margin: 0 auto;
-  border: 1px solid red;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
   font-family: 'Roboto', sans-serif;
+
+  @media screen and (max-width: 985px) {
+    justify-content: center;
+  }
 `;

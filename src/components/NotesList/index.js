@@ -9,9 +9,9 @@ const NotesList = () => {
 
   return (
     <StyledNotesList>
-      <SingleNote addNewNote />
+      <SingleNote addNewNote id="add-new-note" />
       {notes.map(note => (
-        <SingleNote content={note.content} id={note.id} key={note.id} />
+        <SingleNote id={note.id} key={note.id} content={note.content} />
       ))}
     </StyledNotesList>
   );
@@ -28,6 +28,10 @@ const StyledNotesList = styled.ul`
 
   & .single-note {
     margin: 30px 30px;
+  }
+
+  @media screen and (max-width: 985px) {
+    justify-content: center;
   }
 `;
 

@@ -1,115 +1,50 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import uuid from 'react-uuid';
+// import uuid from 'react-uuid';
 
 import MarkdownPreview from '../MarkdownPreview';
-
-import Modal from '../Modal';
-import Flexbox from '../Flexbox';
-import Button from '../Button';
-
-import useNotes from '../../hooks';
-
-import { BackIcon, EditIcon, DeleteIcon, SaveIcon } from '../../icons';
+import NoteModal from '../NoteModal';
 
 const SingleNote = props => {
-  const { content, id, addNewNote } = props;
+  const { id, content, addNewNote } = props;
 
   // used for showing/not showing modal
   const [showModal, setShowModal] = useState(false);
-  // used for getting the textArea value
-  const [textareaValue, setTextareaValue] = useState(addNewNote ? '' : content);
-
-  console.log({ textareaValue, content });
-  const onTextareaChange = e => setTextareaValue(e.target.value);
-
-  // toggles between editing mode and markdown preview mode
-  // if the component is used for adding new note then it displays edit mode by default
-  // otherwise it displays preview mode
-  const [isEditing, setIsEditing] = useState(!!addNewNote);
 
   const openModal = () => setShowModal(true);
-
-  const { remove, save, add } = useNotes();
-
-  const closeModal = () => {
-    if (addNewNote) {
-      add({
-        id: uuid(),
-        content: textareaValue
-      });
-    }
-    setShowModal(false);
-  };
-
-  const onDelete = () => remove({ id });
-
-  const toggleEditMode = () => {
-    if (isEditing) {
-      save({ id, content: textareaValue });
-    }
-    setIsEditing(!isEditing);
-  };
-
-  // componentWIllUnoumt
-
-  // eslint-disable-next-line arrow-body-style
-  useEffect(() => {
-    return () => {
-      console.log('unmount');
-    };
-  }, []);
+  const closeModal = () => setShowModal(false);
 
   return (
     <>
       {showModal && (
-        <Modal>
-          <Modal.Header>
-            <Flexbox
-              flexDirection="row"
-              justifyContent="space-between"
-              alignItems="center"
-            >
-              <Button onClick={closeModal}>
-                <img src={BackIcon} alt="Go back" />
-              </Button>
-              <div>
-                <Button onClick={toggleEditMode}>
-                  <img src={isEditing ? SaveIcon : EditIcon} alt="Edit" />
-                </Button>
-                <Button onClick={onDelete}>
-                  <img src={DeleteIcon} alt="Delete" />
-                </Button>
-              </div>
-            </Flexbox>
-          </Modal.Header>
-          <Modal.Content>
-            {isEditing ? (
-              <StyledTextArea
-                value={textareaValue}
-                onChange={onTextareaChange}
-              />
-            ) : (
-              <MarkdownPreview markdown={textareaValue} />
-            )}
-          </Modal.Content>
-        </Modal>
+        <NoteModal
+          onClose={closeModal}
+          id={id}
+          addNewNote={addNewNote}
+          content={content}
+        />
       )}
       <StyledSingleNote
         onClick={openModal}
         id={id}
-        className="single-note"
         $addNewNote={addNewNote}
+        className="single-note"
       >
         {addNewNote ? (
-          <p>Add new note</p>
+          <p className="add-new-note-plus">+</p>
         ) : (
-          <MarkdownPreview markdown={content} />
+          <StyledMarkdownPreviewWrapper>
+            <MarkdownPreview markdown={content} />
+          </StyledMarkdownPreviewWrapper>
         )}
       </StyledSingleNote>
     </>
   );
+};
+
+SingleNote.defaultProps = {
+  addNewNote: false
 };
 
 const StyledSingleNote = styled.li`
@@ -126,43 +61,44 @@ const StyledSingleNote = styled.li`
   border: 3px solid #fdfdfd;
   transition: border-color 200ms ease-in-out;
   user-select: none;
-  overflow: hidden;
+
   display: flex;
   justify-content: ${({ $addNewNote }) =>
     $addNewNote ? 'center' : 'flex-start'};
   align-items: ${({ $addNewNote }) => ($addNewNote ? 'center' : 'flex-start')};
 
+  position: relative;
+  transform-origin: top left;
+  overflow: hidden;
+  z-index: 998;
+
   &:hover,
   &:focus {
-    border-color: #b90445;
+    border-color: ${({ $addNewNote }) => ($addNewNote ? 'none' : '#b90445')};
+  }
+
+  & > .add-new-note-plus {
+    color: white;
+    font-size: 64px;
+
+    font-family: 'Roboto', sans-serif;
   }
 `;
 
-const StyledTextArea = styled.textarea`
+const StyledMarkdownPreviewWrapper = styled.span`
   display: block;
   width: 100%;
-  height: 744px;
-  border: none;
-  font-sioze: 14px;
-  font-family: 'Roboto Mono', monospace;
-  resize: none;
+  height: 100%;
 
-  &:focus,
-  &:hover {
-    border: none;
-    outline: none;
-  }
+  transform: scale(0.25) translate(calc(50% + 80px), calc(50% + 80px));
+  position: absolute;
+  top: -50%;
+  left: -50%;
 `;
 
 SingleNote.propTypes = {
   id: PropTypes.string.isRequired,
-  content: PropTypes.string,
   addNewNote: PropTypes.bool
-};
-
-SingleNote.defaultProps = {
-  addNewNote: false,
-  content: ''
 };
 
 export default SingleNote;
