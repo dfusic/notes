@@ -16,6 +16,7 @@ const StyledButton = styled.button`
   background-color: transparent;
   cursor: pointer;
   border: none;
+  outline: none;
 `;
 
 Button.propTypes = {

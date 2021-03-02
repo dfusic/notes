@@ -18,12 +18,7 @@ const SingleNote = props => {
   return (
     <>
       {showModal && (
-        <NoteModal
-          onClose={closeModal}
-          id={id}
-          addNewNote={addNewNote}
-          content={content}
-        />
+        <NoteModal onClose={closeModal} id={id} addNewNote={addNewNote} />
       )}
       <StyledSingleNote
         onClick={openModal}

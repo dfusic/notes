@@ -13,16 +13,29 @@ import useNotes from '../../hooks';
 import { BackIcon, EditIcon, DeleteIcon, SaveIcon } from '../../icons';
 
 const NoteModal = props => {
-  const { id, onClose, addNewNote, content } = props;
+  const { id, onClose, addNewNote } = props;
 
   const { get, remove, add, save } = useNotes();
 
-  const [isEditing, setIsEditing] = useState(!!addNewNote);
-  const [textareaValue, setTextareaValue] = useState(addNewNote ? '' : content);
+  const [isEditing, setIsEditing] = useState(false);
+  const [textareaValue, setTextareaValue] = useState('');
 
-  const toggleEditMode = () => {
-    setIsEditing(!isEditing);
-  };
+  useEffect(() => {
+    const note = get({ id });
+    if (note?.content) {
+      setTextareaValue(note.content);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id]);
+
+  useEffect(() => {
+    if (addNewNote) {
+      setTextareaValue('');
+      setIsEditing(true);
+    }
+  }, [addNewNote]);
+
+  const toggleEditMode = () => setIsEditing(!isEditing);
 
   const onModalClose = () => {
     if (addNewNote) {
@@ -54,19 +67,12 @@ const NoteModal = props => {
     onClose();
   };
 
-  const onTextareaChange = e => setTextareaValue(e.target.value);
-
-  // on component mount get the note by id
-  useEffect(() => {
-    const note = get({ id });
-    if (note && note.content && note.id) {
-      setTextareaValue(note.content);
-    }
-    // Optimistic programming :D
-    // we only want to run the useEffect hook on mount
-    // but eslint detects that the get and note should be dep's
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  const onTextareaChange = e => {
+    // immutability
+    let currentTextareaValue = textareaValue;
+    currentTextareaValue = e.target.value;
+    setTextareaValue(currentTextareaValue);
+  };
 
   return (
     <Modal>
@@ -79,14 +85,18 @@ const NoteModal = props => {
           <Button onClick={onModalClose}>
             <img src={BackIcon} alt="Go back" />
           </Button>
-          <div>
+          <Flexbox
+            flexDirection="row"
+            alignItems="center"
+            justifyContent="center"
+          >
             <Button onClick={toggleEditMode}>
-              <img src={isEditing ? SaveIcon : EditIcon} alt="Edit" />
+              <StyledIcon src={isEditing ? SaveIcon : EditIcon} alt="Edit" />
             </Button>
             <Button onClick={onDelete}>
-              <img src={DeleteIcon} alt="Delete" />
+              <StyledIcon src={DeleteIcon} alt="Delete" />
             </Button>
-          </div>
+          </Flexbox>
         </Flexbox>
       </Modal.Header>
       <Modal.Content>
@@ -122,4 +132,8 @@ const StyledTextArea = styled.textarea`
     border: none;
     outline: none;
   }
+`;
+
+const StyledIcon = styled.img`
+  height: 19px;
 `;

@@ -86,3 +86,11 @@ notes.save({id: "simpleID", content:"# New heading"});
 - checkout the project
 - run `yarn install` inside of the project
 - after installing run `yarn start` to start the app on port 3000 (if free)
+
+# Optimization
+
+- context notes are memoized
+- no direct usage of props inside of state, using useEffect
+- immutability
+
+- **idea**: as there are no BE requests (everything is stored inside of the browser) currently there is no need for virtualisation ([react-window](https://github.com/bvaughn/react-window) or [react-virtualized](https://github.com/bvaughn/react-virtualized)). If there would be BE requests the _react-window_ library would be great.
