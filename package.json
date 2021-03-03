@@ -1,5 +1,6 @@
 {
   "name": "notes",
+  "homepage": "https://dfusic.github.io/notes/",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -14,6 +15,7 @@
     "eslint-plugin-prettier": "^3.3.1",
     "eslint-plugin-react": "^7.22.0",
     "eslint-plugin-react-hooks": "^4.2.0",
+    "gh-pages": "^3.1.0",
     "prettier": "^2.2.1",
     "prop-types": "^15.7.2",
     "react": "^17.0.1",
@@ -30,6 +32,8 @@
     "test": "react-scripts test",
     "lint": "eslint src/**/*.{js,jsx}",
     "format": "prettier --write \"src/**/*.{js,jsx,ts,css,less,scss,vue,json,gql,md}\"",
+    "predeploy": "yarn build",
+    "deploy": "yarn lint && yarn format && gh-pages -d build",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {

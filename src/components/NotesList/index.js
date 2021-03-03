@@ -7,12 +7,14 @@ import SingleNote from '../SingleNote';
 const NotesList = () => {
   const { notes } = useContext(NotesContext);
 
+  const notesRender = notes.map(note => (
+    <SingleNote id={note.id} key={note.id} content={note.content} />
+  ));
+
   return (
     <StyledNotesList>
       <SingleNote addNewNote id="add-new-note" />
-      {notes.map(note => (
-        <SingleNote id={note.id} key={note.id} content={note.content} />
-      ))}
+      {notesRender}
     </StyledNotesList>
   );
 };
