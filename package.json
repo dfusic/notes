@@ -33,7 +33,7 @@
     "lint": "eslint src/**/*.{js,jsx}",
     "format": "prettier --write \"src/**/*.{js,jsx,ts,css,less,scss,vue,json,gql,md}\"",
     "predeploy": "yarn build",
-    "deploy": "yarn lint && yarn format && gh-pages -d build",
+    "deploy": "yarn lint && yarn format && yarn test --watchAll=false && gh-pages -d build",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {

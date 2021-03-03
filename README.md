@@ -94,3 +94,9 @@ notes.save({id: "simpleID", content:"# New heading"});
 - immutability
 
 - **idea**: as there are no BE requests (everything is stored inside of the browser) currently there is no need for virtualisation ([react-window](https://github.com/bvaughn/react-window) or [react-virtualized](https://github.com/bvaughn/react-virtualized)). If there would be BE requests the _react-window_ library would be great.
+
+# Deployment
+
+- deployment is done using Github pages
+- run `yarn deploy` to deploy the page on github pages (https://dfusic.github.io/notes/)
+  - runs eslint, prettier and tests before deploying
