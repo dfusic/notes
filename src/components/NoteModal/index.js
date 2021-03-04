@@ -130,7 +130,7 @@ const StyledTextArea = styled.textarea`
   height: 691px;
   overflow-x: hidden;
   border: none;
-  font-sioze: 14px;
+  font-size: 14px;
   font-family: 'Roboto Mono', monospace;
   resize: none;
 
