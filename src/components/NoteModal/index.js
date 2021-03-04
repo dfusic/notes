@@ -63,8 +63,11 @@ const NoteModal = props => {
   };
 
   const onDelete = () => {
-    remove({ id });
-    onClose();
+    // eslint-disable-next-line no-alert
+    if (window.confirm('Are you sure you want to delete this note?')) {
+      remove({ id });
+      onClose();
+    }
   };
 
   const onTextareaChange = e => {
@@ -101,7 +104,11 @@ const NoteModal = props => {
       </Modal.Header>
       <Modal.Content>
         {isEditing ? (
-          <StyledTextArea value={textareaValue} onChange={onTextareaChange} />
+          <StyledTextArea
+            autoFocus
+            value={textareaValue}
+            onChange={onTextareaChange}
+          />
         ) : (
           <MarkdownPreview markdown={textareaValue} />
         )}
